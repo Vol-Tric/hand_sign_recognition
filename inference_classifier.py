@@ -7,7 +7,7 @@ import numpy as np
 model_dict = pickle.load(open('./model.p', 'rb'))
 model = model_dict['model']
 
-cap = cv2.VideoCapture(2)
+cap = cv2.VideoCapture(0)
 
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
@@ -15,7 +15,7 @@ mp_drawing_styles = mp.solutions.drawing_styles
 
 hands = mp_hands.Hands(static_image_mode=True, min_detection_confidence=0.3)
 
-labels_dict = {0: 'A', 1: 'B', 2: 'L'}
+labels_dict = {i: chr(65 + i) for i in range(26)} 
 while True:
 
     data_aux = []
@@ -66,8 +66,9 @@ while True:
         cv2.putText(frame, predicted_character, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3,
                     cv2.LINE_AA)
 
-    cv2.imshow('frame', frame)
-    cv2.waitKey(1)
+    cv2.imshow('Hand Gesture recognition', frame)
+    if cv2.waitKey(10) & 0xFF == ord('q'):
+        break
 
 
 cap.release()

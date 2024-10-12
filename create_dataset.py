@@ -42,8 +42,9 @@ for dir_ in os.listdir(DATA_DIR):
                     data_aux.append(x - min(x_))
                     data_aux.append(y - min(y_))
 
-            data.append(data_aux)
-            labels.append(dir_)
+            if(len(data_aux) == 42): #this is to remove inhomogeneous shapes error that is countered in training_classifier
+                data.append(data_aux)
+                labels.append(dir_)
 
 f = open('data.pickle', 'wb')
 pickle.dump({'data': data, 'labels': labels}, f)
